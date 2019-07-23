@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="NSRLStripper.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos Y="20"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="unsrlstripper.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="uNSRLStripper"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="16" Y="271"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="102" Column="6" TopLine="76"/>
+      </Position1>
+      <Position2>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="230" Column="10" TopLine="189"/>
+      </Position2>
+      <Position3>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="198" TopLine="161"/>
+      </Position3>
+      <Position4>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="199" TopLine="162"/>
+      </Position4>
+      <Position5>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="205" Column="69" TopLine="163"/>
+      </Position5>
+      <Position6>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="60" Column="32" TopLine="38"/>
+      </Position6>
+      <Position7>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="207" Column="35" TopLine="188"/>
+      </Position7>
+      <Position8>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="97" Column="26" TopLine="56"/>
+      </Position8>
+      <Position9>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="18" Column="17"/>
+      </Position9>
+      <Position10>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="62" Column="37" TopLine="49"/>
+      </Position10>
+      <Position11>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="63" Column="37" TopLine="50"/>
+      </Position11>
+      <Position12>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="62" Column="37" TopLine="49"/>
+      </Position12>
+      <Position13>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="63" Column="37" TopLine="50"/>
+      </Position13>
+      <Position14>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="62" Column="37" TopLine="49"/>
+      </Position14>
+      <Position15>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="63" Column="37" TopLine="50"/>
+      </Position15>
+      <Position16>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="62" Column="37" TopLine="49"/>
+      </Position16>
+      <Position17>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="63" Column="37" TopLine="50"/>
+      </Position17>
+      <Position18>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="62" Column="37" TopLine="49"/>
+      </Position18>
+      <Position19>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="63" Column="37" TopLine="50"/>
+      </Position19>
+      <Position20>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="62" Column="37" TopLine="49"/>
+      </Position20>
+      <Position21>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="277" Column="25" TopLine="252"/>
+      </Position21>
+      <Position22>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="21" Column="16"/>
+      </Position22>
+      <Position23>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="64" Column="14" TopLine="33"/>
+      </Position23>
+      <Position24>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="138" Column="82" TopLine="109"/>
+      </Position24>
+      <Position25>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="139" Column="82" TopLine="110"/>
+      </Position25>
+      <Position26>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="259" Column="70" TopLine="236"/>
+      </Position26>
+      <Position27>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="261" Column="13" TopLine="236"/>
+      </Position27>
+      <Position28>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="99" Column="20" TopLine="55"/>
+      </Position28>
+      <Position29>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="98" Column="20" TopLine="54"/>
+      </Position29>
+      <Position30>
+        <Filename Value="unsrlstripper.pas"/>
+        <Caret Line="69" Column="24" TopLine="55"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

@@ -1,0 +1,9 @@
+v1.1 July 2019
+
+Added a checkbox to enable the user to decide if he wants the hash title embedded in line 1, or not. Enabled by default
+Interface refresh rate changed to make the refresh rate less often (was 8K rows, now 200K rows), but the processing faster. 
+Ensured a default radio selection is on by default (currently SHA-1). Saves the user one less mouse click. 
+
+v1.0
+
+Initial release, Jan 2017

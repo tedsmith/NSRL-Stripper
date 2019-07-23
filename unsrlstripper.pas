@@ -1,23 +1,12 @@
 unit uNSRLStripper;
-// NSRL Stripper - A simple utility for stripping out either the SHA-1,
-// MD5 or CRC values alone from the NSRL hash database. Saves new output file
-// that contains only the column of hashes you require, suitably formatted for
-// immediate injestion into digital forensic or other data analysis tools.
-// Note that this utility is NOT needed for X-Ways Forensics because it is
-// already intelligent enough to work out from your initialised hash database
-// what values to import. i.e. if you initiliased as SHA-1, it will injest only
-// the SHA-1 values. In other words, XWF does for you what this tool does.
-// But you may not be fortunate enough to own a license of XWF, or you may need to
-// use something else as well, in which case a tool like this may be of use.
 
-// Written by Ted Smith (c) 2017. Licensed under GPL v2.0
 {$mode objfpc}{$H+}
 
 interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, lclintf;
+  ExtCtrls;
 
 type
 
@@ -25,8 +14,8 @@ type
 
   TForm1 = class(TForm)
     btnSelectInputFile: TButton;
+    cbIncludeHeader: TCheckBox;
     GroupBox1: TGroupBox;
-    lblTitle: TLabel;
     lblEndTime: TLabel;
     lblInputFile: TLabel;
     lblOutputFile: TLabel;
@@ -38,8 +27,6 @@ type
     procedure btnSelectInputFileClick(Sender: TObject);
     function CheckSourceStructure(InputFile : string) : boolean;
     procedure FormCreate(Sender: TObject);
-    procedure GroupBox1Click(Sender: TObject);
-    procedure lblTitleClick(Sender: TObject);
     function ProcessLine(s : string; Len : integer) : string;
   private
     { private declarations }
@@ -73,9 +60,10 @@ var
   HashAlg : string;
   LinesWritten, RefreshBuffer : integer;
   SourceIsOK : boolean;
+  itterationcount : QWord;
   StartTime, EndTime, TimeTaken : TDateTime;
   const
-    RefreshBufferLimit : integer = 4000;
+    RefreshBufferLimit : integer = 100000; // Every 100K lines, refresh interface
 
 begin
   LinesWritten := 0;
@@ -107,7 +95,7 @@ begin
       try
       AssignFile(FileOut, SaveDialog1.FileName);
       Rewrite(FileOut);
-      Writeln(FileOut, HashAlg);
+      if cbIncludeHeader.checked then Writeln(FileOut, HashAlg);
       inc(LinesWritten, 1);
       finally
       lblOutputFile.Caption := 'Output file : ' + SaveDialog1.Filename;
@@ -126,6 +114,8 @@ begin
       begin
         while not EOF(FileIn) do
         begin
+        inc(itterationcount, 1);
+
           // This weird bit of code allows EOF, and ergo one line read, ready for the next line,
           // but it avoids the first line of the NSRL file (column headings) being written to the outputfile.
           // Because that would prevent X-Ways Forensics from importing the hash values.
@@ -147,7 +137,7 @@ begin
               // So we refresh every Xth times, as specified by const RefreshBufferLimit
               if RefreshBuffer = RefreshBufferLimit then
               begin
-                lblProgress.Caption:= 'Lines written: ' + IntToStr(LinesWritten);
+                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines injested';
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
               end;
@@ -175,7 +165,7 @@ begin
               inc(RefreshBuffer, 1);
               if RefreshBuffer = RefreshBufferLimit then
               begin
-                lblProgress.Caption := 'Lines written: ' + IntToStr(LinesWritten);
+                lblProgress.Caption:= IntToStr(LinesWritten);
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
               end;
@@ -203,7 +193,7 @@ begin
               inc(RefreshBuffer, 1);
               if RefreshBuffer = RefreshBufferLimit then
                 begin
-                lblProgress.Caption := 'Lines written: ' + IntToStr(LinesWritten);
+                lblProgress.Caption:= IntToStr(LinesWritten);
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
                 end;
@@ -223,9 +213,7 @@ begin
     TimeTaken := (EndTime - StartTime);
     lblEndTime.Caption:= 'Finished at : ' + FormatDateTime('DD/MM/YY HH:MM:SS', EndTime) + ' , time taken : ' + FormatDateTime('HH:MM:SS', TimeTaken);
     end // End of source file check
-    else ShowMessage('Input file is not constructed as expected.' + #13#10 +
-                     ' Output would fail. Aborted.' + #13#10 +
-                     ' Raise bug report at https://github.com/tedsmith/NSRL-Stripper/issues')
+    else ShowMessage('Input file is not constructed as expected. Output would fail. Aborted.')
     end; // End of open source file
 end;
 
@@ -269,24 +257,14 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  RadioGroup1.itemindex := 0;
-end;
-
-procedure TForm1.GroupBox1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.lblTitleClick(Sender: TObject);
-var
-  NSRLStripperURL: string;
-begin
-  NSRLStripperURL := 'https://github.com/tedsmith/NSRL-Stripper';
-  OpenURL(NSRLStripperURL);
+  // Set default hash to SHA-1 which is most likely the one folk need
+  RadioGroup1.ItemIndex := 0;    // 0 is SHA-1 default
+  // RadioGroup1.ItemIndex := 1; // 1 for Md5 default
+  // RadioGroup1.ItemIndex := 2; // 2 for CRC default
 end;
 
 // Function ProcessLine : Takes the read line from the file (s) and then extracts
-// the bytes from the relative position of the NSRL Text file.
+// the bytes from the releative position of the NSRL Text file.
 // e.g. 40 bytes from string position 2 for SHA-1 (because pos 1 is a quotation char)
 function TForm1.ProcessLine(s : string; Len : integer) : string;
 var
