@@ -1,4 +1,23 @@
 unit uNSRLStripper;
+{
+    NSRL Stripper - A Windows GUI for creating easily ingestable hash lists from
+    the NIST NSRL RDS hash sets.
+
+    Copyright (C) 2019-2021 Ted Smith www.quickhash-gui.org
+
+    Open-Source license :
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    any later version. This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You can read a copy of the GNU General Public License at
+    http://www.gnu.org/licenses/>. Also, http://www.gnu.org/copyleft/gpl.html
+}
 
 {$mode objfpc}{$H+}
 {$J+}  // Hex 1A (0x1A) is the CTRL-Z and DOS EOF char, and its behaviour is controlled by boolean CtrlZMarksEOF.
@@ -17,18 +36,19 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
-    btnSelectInputFile: TButton;
-    cbIncludeHeader: TCheckBox;
-    GroupBox1: TGroupBox;
-    Label1: TLabel;
-    lblEndTime: TLabel;
-    lblInputFile: TLabel;
-    lblOutputFile: TLabel;
-    lblProgress: TLabel;
-    lblStartTime: TLabel;
-    OpenDialog1: TOpenDialog;
-    RadioGroup1: TRadioGroup;
-    SaveDialog1: TSaveDialog;
+    btnSelectInputFile : TButton;
+    cbIncludeHeader    : TCheckBox;
+    GroupBox1          : TGroupBox;
+    Label1             : TLabel;
+    lblEndTime         : TLabel;
+    lblInputFile       : TLabel;
+    lblOutputFile      : TLabel;
+    lblProgress        : TLabel;
+    lblStartTime       : TLabel;
+    OpenDialog1        : TOpenDialog;
+    RadioGroup1        : TRadioGroup;
+    SaveDialog1        : TSaveDialog;
+
     procedure btnSelectInputFileClick(Sender: TObject);
     function CheckSourceStructure(InputFile : string) : boolean;
     procedure FormCreate(Sender: TObject);
@@ -59,20 +79,21 @@ If MD5 selected, read line to first ',' and read forwards 32.
 
 procedure TForm1.btnSelectInputFileClick(Sender: TObject);
 var
-  FileIn : Textfile;
-  FileOut : Textfile;
-  LineRead, HashValue : string;
-  HashAlg : string;
-  LinesWritten : integer  = Default(integer);
-  RefreshBuffer : integer = Default(integer);
-  SourceIsOK : boolean = Default(Boolean);
-  itterationcount : QWord = Default(QWord);
+  FileIn                        : Textfile;
+  FileOut                       : Textfile;
+  LineRead, HashValue           : string;
+  HashAlg                       : string;
+  LinesWritten                  : integer = Default(integer);
+  RefreshBuffer                 : integer = Default(integer);
+  SourceIsOK                    : boolean = Default(Boolean);
+  itterationcount               : QWord   = Default(QWord);
   StartTime, EndTime, TimeTaken : TDateTime;
-  const
+
+const
     RefreshBufferLimit : integer = 100000; // Every 100K lines, refresh interface
 
 begin
-  CtrlZMarksEOF := False;
+  CtrlZMarksEOF := False; // See comment at top re 0x1A hex value
   LinesWritten := 0;
 
   if OpenDialog1.Execute then
@@ -99,12 +120,12 @@ begin
     if SaveDialog1.Execute then
     begin
       try
-      AssignFile(FileOut, SaveDialog1.FileName);
-      Rewrite(FileOut);
-      if cbIncludeHeader.checked then Writeln(FileOut, HashAlg);
-      inc(LinesWritten, 1);
+        AssignFile(FileOut, SaveDialog1.FileName);
+        Rewrite(FileOut);
+        if cbIncludeHeader.checked then Writeln(FileOut, HashAlg);
+        inc(LinesWritten, 1);
       finally
-      lblOutputFile.Caption := 'Output file : ' + SaveDialog1.Filename;
+        lblOutputFile.Caption := 'Output file : ' + SaveDialog1.Filename;
       end;
     end;
 
@@ -143,7 +164,7 @@ begin
               // So we refresh every Xth times, as specified by const RefreshBufferLimit
               if RefreshBuffer = RefreshBufferLimit then
               begin
-                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines ingested';
+                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines ingested. Please wait...';
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
               end;
@@ -171,7 +192,7 @@ begin
               inc(RefreshBuffer, 1);
               if RefreshBuffer = RefreshBufferLimit then
               begin
-                lblProgress.Caption:= IntToStr(LinesWritten);
+                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines ingested. Please wait...'; ;
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
               end;
@@ -199,7 +220,7 @@ begin
               inc(RefreshBuffer, 1);
               if RefreshBuffer = RefreshBufferLimit then
                 begin
-                lblProgress.Caption:= IntToStr(LinesWritten);
+                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines ingested. Please wait...'; ;
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
                 end;
@@ -274,8 +295,6 @@ end;
 // the bytes from the releative position of the NSRL Text file.
 // e.g. 40 bytes from string position 2 for SHA-1 (because pos 1 is a quotation char)
 function TForm1.ProcessLine(s : string; Len : integer) : string;
-var
-  i : integer;
 begin
   result := '';
   if Len = 40 then

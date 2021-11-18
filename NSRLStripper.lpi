@@ -12,6 +12,12 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <MajorVersionNr Value="1"/>
+      <MinorVersionNr Value="2"/>
+      <StringTable CompanyName="Ted Smith (www.quickhash-gui.org Project)" LegalCopyright="(c) Ted Smith 2019 - 2021 - Released under GNU"/>
+    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>

@@ -9,7 +9,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
         <CursorPos Y="20"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,9 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uNSRLStripper"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="260"/>
-        <CursorPos X="43" Y="283"/>
-        <UsageCount Value="30"/>
+        <CursorPos X="25" Y="8"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
