@@ -1,3 +1,18 @@
+v1.2 Nov 2021
+The current (Sept 2021) NSRL RDS hash set seems to include some 0x1A values, which was causing all previous versions of NSRL Stripper to abort parsing because it thought it had reached the end of the file, because 0x1A is the DOS char for End of File. 
+
+Using a compiler directive, I have corrected this. I'm not sure the hash sets should contain 0x1A in the filename fields, but who am I to argue. This new version seems to now work fully with RDS v2.74 - September 2021 (https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl/nsrl-download/current-rds) and it processed the entire set of 192,677,749 records and didn't exceed 5Mb of RAM use throughout. Tidy. 
+
+I am told that even in the DOS era, relying on ^Z was pretty unusual. It was a CP/M thing (hence also CCP/M, CDOS, MDOS and so on) since the original CP/M filesystem had a filesize granularity of 128 bytes (i.e. it didn't store an exact length). There are still rare situations where a (text) file can end up being padded with ^Z, e.g. if it's been through an X-Modem transfer. But I don't know what the process used by NIST is. Anyway, let us not continue to worry. This version should solve our issues. 
+
+Summary of updates
+
+1) Made the correction as described above
+2) Added the Open Source GNU General Public License statement
+3) Initialised a few variables that should have been initialised as default values for their type
+4) Corrected a few typos in the code and re-aligned some stuff as per my OCD. 
+5) Made a few GUI tweaks to help keep user assured of progress etc
+
 v1.1 July 2019
 
 Added a checkbox to enable the user to decide if he wants the hash title embedded in line 1, or not. Enabled by default

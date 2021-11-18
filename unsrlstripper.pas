@@ -1,6 +1,10 @@
 unit uNSRLStripper;
 
 {$mode objfpc}{$H+}
+{$J+}  // Hex 1A (0x1A) is the CTRL-Z and DOS EOF char, and its behaviour is controlled by boolean CtrlZMarksEOF.
+       // By setting {$J+} and then using CtrlZMarksEOF := False; we can ensure acceptance and not get confused
+       // by old EOF marker values.
+       // https://github.com/tedsmith/NSRL-Stripper/issues/2
 
 interface
 
@@ -16,6 +20,7 @@ type
     btnSelectInputFile: TButton;
     cbIncludeHeader: TCheckBox;
     GroupBox1: TGroupBox;
+    Label1: TLabel;
     lblEndTime: TLabel;
     lblInputFile: TLabel;
     lblOutputFile: TLabel;
@@ -58,16 +63,17 @@ var
   FileOut : Textfile;
   LineRead, HashValue : string;
   HashAlg : string;
-  LinesWritten, RefreshBuffer : integer;
-  SourceIsOK : boolean;
-  itterationcount : QWord;
+  LinesWritten : integer  = Default(integer);
+  RefreshBuffer : integer = Default(integer);
+  SourceIsOK : boolean = Default(Boolean);
+  itterationcount : QWord = Default(QWord);
   StartTime, EndTime, TimeTaken : TDateTime;
   const
     RefreshBufferLimit : integer = 100000; // Every 100K lines, refresh interface
 
 begin
+  CtrlZMarksEOF := False;
   LinesWritten := 0;
-  SourceIsOK := false;
 
   if OpenDialog1.Execute then
     begin
@@ -137,7 +143,7 @@ begin
               // So we refresh every Xth times, as specified by const RefreshBufferLimit
               if RefreshBuffer = RefreshBufferLimit then
               begin
-                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines injested';
+                lblProgress.Caption:= IntToStr(LinesWritten) + ' lines ingested';
                 Application.ProcessMessages;
                 RefreshBuffer := 0;
               end;
@@ -222,6 +228,7 @@ function TForm1.CheckSourceStructure(InputFile : String) : boolean;
 "SHA-1","MD5","CRC32","FileName","FileSize","ProductCode","OpSystemCode","SpecialCode"
 "0000002D9D62AEBE1E0E9DB6C4C4C7C16A163D2C","1D6EBB5A789ABD108FF578263E1F40F3","FFFFFFFF","_sfx_0024._p",4109,21000,"358",""
 "00000142988AFA836117B1B572FAE4713F200567","9B3702B0E788C6D62996392FE3C9786A","05E566DF","J0180794.JPG",32768,10146,"358",""
+
 This is 16 quotation marks on line 1, 12 on line 2, and 12 on line 3
 So look for 40 quotation marks.
 }
